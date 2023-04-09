@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 // @ts-ignore
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IamModule } from './iam/iam.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { IamModule } from './iam/iam.module';
     CoffeesModule,
     UsersModule,
     IamModule,
+    ConfigModule.forRoot({}),
   ],
   controllers: [AppController],
   providers: [AppService],
