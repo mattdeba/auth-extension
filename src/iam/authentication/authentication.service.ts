@@ -18,13 +18,22 @@ import jwtConfig from '../config/jwt.config';
 
 @Injectable()
 export class AuthenticationService {
+  private readonly jwtConfiguration: ConfigType<typeof jwtConfig>;
+  private readonly hashingService: HashingService;
+  private readonly jwtService: JwtService;
+  private readonly usersRepository: Repository<User>;
+
   constructor(
-    @InjectRepository(User) private readonly usersRepository: Repository<User>,
-    private readonly hashingService: HashingService,
-    private readonly jwtService: JwtService,
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
-  ) {}
+    @InjectRepository(User) usersRepository: Repository<User>,
+    hashingService: HashingService,
+    jwtService: JwtService,
+    @Inject(jwtConfig.KEY) jwtConfiguration: ConfigType<typeof jwtConfig>,
+  ) {
+    this.jwtConfiguration = jwtConfiguration;
+    this.hashingService = hashingService;
+    this.jwtService = jwtService;
+    this.usersRepository = usersRepository;
+  }
 
   async signUp(signUpDto: SignUpDto) {
     try {
